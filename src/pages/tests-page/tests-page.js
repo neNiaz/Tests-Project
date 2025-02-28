@@ -81,7 +81,10 @@ export class TestsPage {
       </div>
     `;
     const retryBtn = this.rootElement.querySelector(".test-result__retry");
-    retryBtn.addEventListener("click", () => this.startTest(testId));
+    retryBtn.addEventListener("click", () => {
+      localStorage.clear();
+      this.startTest(testId);
+    });
   }
 
   showExitModal(onConfirm) {

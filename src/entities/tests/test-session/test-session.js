@@ -7,6 +7,19 @@ export class TestSession {
     this.onExit = onExit;
     this.onSubmit = onSubmit;
     this.timerData = null;
+    this.savedAnswers = this.loadSavedAnswers();
+  }
+
+  loadSavedAnswers() {
+    const testId = this.testData.id || this.testData.name || "unknown";
+    const key = `test-results-${testId}`;
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      const resultsArray = JSON.parse(saved);
+      const lastResult = resultsArray[resultsArray.length - 1];
+      return lastResult.userAnswers || {};
+    }
+    return {};
   }
 
   render() {
@@ -16,7 +29,10 @@ export class TestSession {
       this.testData.questions.length,
       "00:00",
     ).render();
-    const formHtml = new TestComponent(this.testData).renderForm();
+    const formHtml = new TestComponent(
+      this.testData,
+      this.savedAnswers,
+    ).renderForm();
     return `
       <div class="test-container">
         ${headerHtml}
@@ -72,7 +88,29 @@ export class TestSession {
         Math.floor((Date.now() - this.timerData.startTime) / 60000),
         Math.floor((Date.now() - this.timerData.startTime) / 1000) % 60,
       );
+
+      this.saveResultsToLocalStorage(userAnswers, elapsedTime);
+
       if (this.onSubmit) this.onSubmit(userAnswers, elapsedTime);
     });
+  }
+
+  saveResultsToLocalStorage(userAnswers, elapsedTime) {
+    const testId = this.testData.id || this.testData.name || "unknown-test";
+
+    const resultData = {
+      testId,
+      userAnswers,
+      elapsedTime,
+      timestamp: new Date().toISOString(),
+    };
+
+    const key = `test-results-${testId}`;
+
+    const existing = localStorage.getItem(key);
+    let resultsArray = existing ? JSON.parse(existing) : [];
+    resultsArray.push(resultData);
+
+    localStorage.setItem(key, JSON.stringify(resultsArray));
   }
 }

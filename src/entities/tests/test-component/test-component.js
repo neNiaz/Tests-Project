@@ -1,6 +1,7 @@
 export class TestComponent {
-  constructor(testData) {
+  constructor(testData, savedAnswers = {}) {
     this.testData = testData;
+    this.savedAnswers = savedAnswers;
   }
 
   renderForm() {
@@ -22,9 +23,10 @@ export class TestComponent {
           <div class="${optionsClass}">`;
 
       questionObj.question_answers.forEach((answer) => {
+        const checked = this.savedAnswers[index] === answer ? "checked" : "";
         html += `
               <label class="test__option">
-                <input type="radio" name="q${index}" value="${answer}"> ${answer}
+                <input type="radio" name="q${index}" value="${answer}" ${checked}> ${answer}
               </label>`;
       });
 
