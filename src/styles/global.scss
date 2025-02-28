@@ -1,0 +1,31 @@
+@import "./button.scss";
+@import "./reset.scss";
+@import "./input.scss";
+@import "../pages/tests-page/test-page.module.scss";
+@import "../entities/tests/test-header/test-header.module.scss";
+@import "../entities/tests/test-result/test-result.module.scss";
+@import "../widgets/sidebar/sidebar.module.scss";
+@import "../entities/modal/modal.module.scss";
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app__header,
+.app__footer {
+  background: #ddd;
+  padding: 1rem;
+  text-align: center;
+}
+
+.app__body {
+  display: flex;
+  flex-grow: 1;
+}
+
+
+.app__main {
+  flex-grow: 1;
+}

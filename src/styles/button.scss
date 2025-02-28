@@ -1,0 +1,45 @@
+.btn {
+  display: inline-block;
+  height: 35px;
+  line-height: 1.5;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  text-decoration: none;
+  min-width: 125px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &--primary {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+
+    &.btn--outline {
+      background-color: transparent;
+      border: 1px solid #ff4d4d;
+      color: #ff4d4d;
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+
+    &.btn--outline {
+      background-color: transparent;
+      border-color: #6c757d;
+      color: #6c757d;
+    }
+  }
+
+  &--text {
+    border: 0;
+    background: transparent;
+    color: #6c757d;
+  }
+}
